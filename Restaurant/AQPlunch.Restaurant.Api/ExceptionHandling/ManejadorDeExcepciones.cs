@@ -1,8 +1,8 @@
-using AQPlunch.Restaurant.Domain.Exceptions;
+using AQPlunch.RestaurantService.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace AQPlunch.Restaurant.Api.ExceptionHandling;
+namespace AQPlunch.RestaurantService.Api.ExceptionHandling;
 
 public class ManejadorDeExcepciones : IExceptionFilter
 {
@@ -12,6 +12,7 @@ public class ManejadorDeExcepciones : IExceptionFilter
         {
             RecursoNoEncontradoException => new NotFoundObjectResult(new { message = context.Exception.Message }),
             ReglaNegocioException => new BadRequestObjectResult(new { message = context.Exception.Message }),
+            AccesoDenegadoException => new ObjectResult(new { message = context.Exception.Message }) { StatusCode = StatusCodes.Status403Forbidden },
             _ => null
         };
 
