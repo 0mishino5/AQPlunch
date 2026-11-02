@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace AQPlunch.Identity.Domain.Entities;
 
@@ -9,6 +10,7 @@ public partial class User
 
     public string Username { get; set; } = null!;
 
+    [JsonIgnore]
     public string PasswordHash { get; set; } = null!;
 
     public string? Email { get; set; }

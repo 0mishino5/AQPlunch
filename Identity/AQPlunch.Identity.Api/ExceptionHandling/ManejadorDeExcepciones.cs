@@ -12,6 +12,7 @@ public class ManejadorDeExcepciones : IExceptionFilter
         {
             RecursoNoEncontradoException => new NotFoundObjectResult(new { message = context.Exception.Message }),
             ReglaNegocioException => new BadRequestObjectResult(new { message = context.Exception.Message }),
+            CredencialesInvalidasException => new UnauthorizedObjectResult(new { message = context.Exception.Message }),
             _ => null
         };
 
