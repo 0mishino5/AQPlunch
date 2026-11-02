@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AQPlunch.Order.Application.DependencyInjection;
+namespace AQPlunch.OrderService.Application.DependencyInjection;
 
 public static class ApplicationServicesExtensions
 {

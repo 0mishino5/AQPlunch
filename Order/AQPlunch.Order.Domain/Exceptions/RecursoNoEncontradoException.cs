@@ -1,4 +1,4 @@
-namespace AQPlunch.Order.Domain.Exceptions;
+namespace AQPlunch.OrderService.Domain.Exceptions;
 
 public class RecursoNoEncontradoException : Exception
 {

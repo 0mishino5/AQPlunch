@@ -1,8 +1,8 @@
-using AQPlunch.Order.Domain.Exceptions;
+using AQPlunch.OrderService.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace AQPlunch.Order.Api.ExceptionHandling;
+namespace AQPlunch.OrderService.Api.ExceptionHandling;
 
 public class ManejadorDeExcepciones : IExceptionFilter
 {
