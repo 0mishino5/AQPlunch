@@ -1,4 +1,6 @@
+using AQPlunch.Identity.Application.Security;
 using AQPlunch.Identity.Infrastructure.Database;
+using AQPlunch.Identity.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,8 @@ public static class InfrastructureServicesExtensions
             string? connectionString = configuration.GetConnectionString("DefaultConnection");
             options.UseNpgsql(connectionString);
         });
+
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }
