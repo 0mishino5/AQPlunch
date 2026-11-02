@@ -21,9 +21,42 @@ Cada servicio tiene 4 proyectos con arquitectura hexagonal y CQRS con MediatR:
 - `Domain`: entidades, interfaces de repositorios y excepciones.
 - `Infrastructure`: DbContext, repositorios y servicios técnicos.
 
-## Configuración local
+## Cómo levantar el proyecto en tu PC
 
-`appsettings.json` solo tiene valores de ejemplo. Cada persona crea un `appsettings.Development.json` en el proyecto Api de su servicio, con su contraseña de PostgreSQL y la clave del JWT. Ese archivo no se sube al repositorio.
+### Lo que necesitas
+
+- .NET 10 SDK y Rider.
+- PostgreSQL instalado y encendido, con la contraseña de tu usuario `postgres`.
+- La clave del JWT del grupo. Se comparte por WhatsApp y no se sube al repositorio.
+
+### Pasos
+
+1. Clona el repositorio o haz **Pull** de `main`.
+2. En la carpeta del proyecto, haz clic derecho en `instalar.ps1` y elige **Ejecutar con PowerShell**. También se puede ejecutar desde una terminal:
+
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\instalar.ps1
+   ```
+
+3. Escribe la contraseña de tu PostgreSQL y la clave del JWT cuando el script las pida.
+4. Abre `AQPlunch.sln` en Rider, elige el servicio en el selector (por ejemplo `AQPlunch.Identity.Api: http`) y dale **Play**.
+5. Abre el Swagger del servicio en su puerto, por ejemplo `http://localhost:5001`.
+
+### Qué hace `instalar.ps1`
+
+- Crea las bases `aqplunch_identity`, `aqplunch_restaurant`, `aqplunch_order` y `aqplunch_sales` si no existen.
+- Ejecuta el script de tablas y el de datos de prueba de cada servicio, solo si la base está vacía. Una base que ya tiene tablas no se toca.
+- Genera el `appsettings.Development.json` de cada servicio con tu contraseña y la clave del JWT. Ese archivo no se sube al repositorio; `appsettings.json` solo tiene valores de ejemplo.
+
+Se puede volver a ejecutar cuando se agregue un servicio nuevo. Para empezar una base de cero, bórrala en pgAdmin y ejecuta el script otra vez.
+
+### Usuarios de prueba
+
+| Usuario | Contraseña | Rol |
+| --- | --- | --- |
+| `admin` | `Admin123*` | Admin |
+| `restaurante1` | `Restaurante123*` | Restaurante (Picantería Los Volcanes) |
+| `restaurante2` | `Restaurante123*` | Restaurante (Cevichería Mar Azul) |
 
 ## Acuerdos entre servicios
 
