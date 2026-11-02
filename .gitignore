@@ -426,3 +426,9 @@ FodyWeavers.xsd
 
 # Official VS Code C# Dev Kit Extension exclusion
 #*.lscache
+
+# Rider
+.idea/
+
+# Configuracion local con la contrasena de PostgreSQL y la clave del JWT
+appsettings.Development.json
