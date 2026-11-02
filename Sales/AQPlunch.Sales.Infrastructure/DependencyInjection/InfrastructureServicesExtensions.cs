@@ -1,4 +1,6 @@
+using AQPlunch.Sales.Domain.Repositories;
 using AQPlunch.Sales.Infrastructure.Database;
+using AQPlunch.Sales.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,10 @@ public static class InfrastructureServicesExtensions
             string? connectionString = configuration.GetConnectionString("DefaultConnection");
             options.UseNpgsql(connectionString);
         });
+
+        services.AddScoped<ISaleRepository, SaleRepository>();
+        services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
