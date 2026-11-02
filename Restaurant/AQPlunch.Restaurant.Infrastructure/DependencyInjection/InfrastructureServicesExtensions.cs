@@ -1,6 +1,8 @@
+using AQPlunch.RestaurantService.Application.Security;
 using AQPlunch.RestaurantService.Domain.Repositories;
 using AQPlunch.RestaurantService.Infrastructure.Database;
 using AQPlunch.RestaurantService.Infrastructure.Repositories;
+using AQPlunch.RestaurantService.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +23,9 @@ public static class InfrastructureServicesExtensions
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddHttpContextAccessor();
+        services.AddScoped<IUsuarioActual, UsuarioActual>();
 
         return services;
     }
