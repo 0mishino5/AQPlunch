@@ -1,4 +1,4 @@
-namespace AQPlunch.Restaurant.Domain.Exceptions;
+namespace AQPlunch.RestaurantService.Domain.Exceptions;
 
 public class RecursoNoEncontradoException : Exception
 {

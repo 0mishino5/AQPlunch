@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AQPlunch.Restaurant.Application.DependencyInjection;
+namespace AQPlunch.RestaurantService.Application.DependencyInjection;
 
 public static class ApplicationServicesExtensions
 {

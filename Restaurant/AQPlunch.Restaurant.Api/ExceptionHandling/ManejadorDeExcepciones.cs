@@ -1,8 +1,8 @@
-using AQPlunch.Restaurant.Domain.Exceptions;
+using AQPlunch.RestaurantService.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace AQPlunch.Restaurant.Api.ExceptionHandling;
+namespace AQPlunch.RestaurantService.Api.ExceptionHandling;
 
 public class ManejadorDeExcepciones : IExceptionFilter
 {

@@ -1,4 +1,4 @@
-using AQPlunch.Restaurant.Api.DependencyInjection;
+using AQPlunch.RestaurantService.Api.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
