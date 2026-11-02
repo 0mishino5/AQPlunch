@@ -36,6 +36,11 @@ public class ProductRepository : Repository<Product>, IProductRepository
             .ToListAsync();
     }
 
+    public async Task<bool> ExistenEnCategoria(Guid categoryId)
+    {
+        return await _dbSet.AnyAsync(p => p.CategoryId == categoryId);
+    }
+
     protected override IQueryable<Product> Consulta()
     {
         return _dbSet.Include(p => p.Category);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace AQPlunch.RestaurantService.Domain.Entities;
 
@@ -19,5 +20,6 @@ public partial class Product
 
     public DateTime? CreatedAt { get; set; }
 
+    [JsonIgnore]
     public virtual Category Category { get; set; } = null!;
 }
