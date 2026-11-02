@@ -40,6 +40,11 @@ public class UserRepository : Repository<User>, IUserRepository
             .FirstOrDefaultAsync(ur => ur.UserId == userId && ur.RoleId == roleId);
     }
 
+    public async Task<int> ContarActivosConRol(string nombreRol)
+    {
+        return await _dbSet.CountAsync(u => u.IsActive && u.UserRoles.Any(ur => ur.Role.RoleName == nombreRol));
+    }
+
     protected override IQueryable<User> Consulta()
     {
         return _dbSet
