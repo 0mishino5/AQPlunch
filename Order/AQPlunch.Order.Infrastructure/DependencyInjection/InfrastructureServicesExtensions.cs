@@ -1,4 +1,6 @@
+using AQPlunch.OrderService.Domain.Repositories;
 using AQPlunch.OrderService.Infrastructure.Database;
+using AQPlunch.OrderService.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,9 @@ public static class InfrastructureServicesExtensions
             string? connectionString = configuration.GetConnectionString("DefaultConnection");
             options.UseNpgsql(connectionString);
         });
+
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
