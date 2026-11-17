@@ -31,6 +31,11 @@ public class SaleRepository : Repository<Sale>, ISaleRepository
         return await _dbSet.AnyAsync(s => s.OrderId == orderId);
     }
 
+    public async Task<bool> ExistenConMetodoDePago(Guid paymentMethodId)
+    {
+        return await _dbSet.AnyAsync(s => s.PaymentMethodId == paymentMethodId);
+    }
+
     protected override IQueryable<Sale> Consulta()
     {
         return _dbSet

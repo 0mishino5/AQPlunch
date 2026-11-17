@@ -1,6 +1,8 @@
+using AQPlunch.Sales.Application.Security;
 using AQPlunch.Sales.Domain.Repositories;
 using AQPlunch.Sales.Infrastructure.Database;
 using AQPlunch.Sales.Infrastructure.Repositories;
+using AQPlunch.Sales.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +22,9 @@ public static class InfrastructureServicesExtensions
         services.AddScoped<ISaleRepository, SaleRepository>();
         services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddHttpContextAccessor();
+        services.AddScoped<IUsuarioActual, UsuarioActual>();
 
         return services;
     }

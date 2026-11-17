@@ -12,6 +12,7 @@ public class ManejadorDeExcepciones : IExceptionFilter
         {
             RecursoNoEncontradoException => new NotFoundObjectResult(new { message = context.Exception.Message }),
             ReglaNegocioException => new BadRequestObjectResult(new { message = context.Exception.Message }),
+            AccesoDenegadoException => new ObjectResult(new { message = context.Exception.Message }) { StatusCode = StatusCodes.Status403Forbidden },
             _ => null
         };
 

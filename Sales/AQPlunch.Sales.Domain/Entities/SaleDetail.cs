@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace AQPlunch.Sales.Domain.Entities;
 
@@ -19,5 +20,6 @@ public partial class SaleDetail
 
     public decimal Subtotal { get; set; }
 
+    [JsonIgnore]
     public virtual Sale Sale { get; set; } = null!;
 }

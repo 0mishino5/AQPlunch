@@ -6,4 +6,5 @@ public interface ISaleRepository : IRepository<Sale>
 {
     Task<List<Sale>> ObtenerPorRestaurante(Guid restaurantId);
     Task<bool> ExistePorPedido(Guid orderId);
+    Task<bool> ExistenConMetodoDePago(Guid paymentMethodId);
 }
