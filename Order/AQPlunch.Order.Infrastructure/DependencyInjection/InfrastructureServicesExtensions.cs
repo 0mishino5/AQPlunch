@@ -1,4 +1,6 @@
+using AQPlunch.OrderService.Application.Clients;
 using AQPlunch.OrderService.Domain.Repositories;
+using AQPlunch.OrderService.Infrastructure.Clients;
 using AQPlunch.OrderService.Infrastructure.Database;
 using AQPlunch.OrderService.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +21,12 @@ public static class InfrastructureServicesExtensions
 
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddHttpClient<IRestaurantClient, RestaurantClient>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["Servicios:Restaurant"]!);
+            client.Timeout = TimeSpan.FromSeconds(10);
+        });
 
         return services;
     }

@@ -1,3 +1,4 @@
+using AQPlunch.OrderService.Domain.Catalogs;
 using AQPlunch.OrderService.Domain.Entities;
 using AQPlunch.OrderService.Domain.Repositories;
 using AQPlunch.OrderService.Infrastructure.Database;
@@ -39,6 +40,14 @@ public class OrderRepository : Repository<Order>, IOrderRepository
         return await Consulta()
             .Where(o => o.TableId == tableId)
             .OrderByDescending(o => o.CreatedAt)
+            .ToListAsync();
+    }
+
+    public async Task<List<Order>> ObtenerActivosPorMesa(Guid tableId)
+    {
+        return await Consulta()
+            .Where(o => o.TableId == tableId && o.Status != EstadoPedido.Entregado && o.Status != EstadoPedido.Cancelado)
+            .OrderBy(o => o.CreatedAt)
             .ToListAsync();
     }
 

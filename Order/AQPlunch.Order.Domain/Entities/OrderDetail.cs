@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace AQPlunch.OrderService.Domain.Entities;
 
@@ -19,5 +20,6 @@ public partial class OrderDetail
 
     public decimal Subtotal { get; set; }
 
+    [JsonIgnore]
     public virtual Order Order { get; set; } = null!;
 }
