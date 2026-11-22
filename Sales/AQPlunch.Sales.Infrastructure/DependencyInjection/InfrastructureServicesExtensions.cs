@@ -21,6 +21,7 @@ public static class InfrastructureServicesExtensions
 
         services.AddScoped<ISaleRepository, SaleRepository>();
         services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+        services.AddScoped<ISaleDetailRepository, SaleDetailRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddHttpContextAccessor();

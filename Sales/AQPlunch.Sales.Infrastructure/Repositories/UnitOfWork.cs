@@ -11,6 +11,7 @@ public class UnitOfWork : IUnitOfWork
 
     public ISaleRepository Sales { get; }
     public IPaymentMethodRepository PaymentMethods { get; }
+    public ISaleDetailRepository SaleDetails { get; }
 
     public UnitOfWork(SalesDbContext context)
     {
@@ -18,6 +19,7 @@ public class UnitOfWork : IUnitOfWork
         _repositorios = new Hashtable();
         Sales = new SaleRepository(context);
         PaymentMethods = new PaymentMethodRepository(context);
+        SaleDetails = new SaleDetailRepository(context);
     }
 
     public IRepository<T> Repositorio<T>() where T : class

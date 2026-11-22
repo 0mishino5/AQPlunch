@@ -4,6 +4,7 @@ public interface IUnitOfWork : IDisposable
 {
     ISaleRepository Sales { get; }
     IPaymentMethodRepository PaymentMethods { get; }
+    ISaleDetailRepository SaleDetails { get; }
 
     IRepository<T> Repositorio<T>() where T : class;
 
