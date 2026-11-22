@@ -1,5 +1,7 @@
+using AQPlunch.Sales.Application.Clients;
 using AQPlunch.Sales.Application.Security;
 using AQPlunch.Sales.Domain.Repositories;
+using AQPlunch.Sales.Infrastructure.Clients;
 using AQPlunch.Sales.Infrastructure.Database;
 using AQPlunch.Sales.Infrastructure.Repositories;
 using AQPlunch.Sales.Infrastructure.Security;
@@ -26,6 +28,12 @@ public static class InfrastructureServicesExtensions
 
         services.AddHttpContextAccessor();
         services.AddScoped<IUsuarioActual, UsuarioActual>();
+
+        services.AddHttpClient<IOrderClient, OrderClient>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["Servicios:Order"]!);
+            client.Timeout = TimeSpan.FromSeconds(10);
+        });
 
         return services;
     }

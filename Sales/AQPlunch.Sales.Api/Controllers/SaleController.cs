@@ -1,3 +1,4 @@
+using AQPlunch.Sales.Application.UseCases.Sales.Commands;
 using AQPlunch.Sales.Application.UseCases.Sales.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -34,5 +35,11 @@ public class SaleController : ControllerBase
     public async Task<IActionResult> GetById(Guid id)
     {
         return Ok(await _mediator.Send(new GetSaleByIdQuery { SaleId = id }));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Add([FromBody] AddSaleCommand command)
+    {
+        return Ok(await _mediator.Send(command));
     }
 }

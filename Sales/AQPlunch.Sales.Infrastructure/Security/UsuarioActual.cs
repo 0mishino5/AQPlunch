@@ -14,6 +14,11 @@ public class UsuarioActual : IUsuarioActual
         _httpContextAccessor = httpContextAccessor;
     }
 
+    public Guid ObtenerUserId()
+    {
+        return Guid.Parse(_httpContextAccessor.HttpContext!.User.FindFirstValue(NombreClaim.UserId)!);
+    }
+
     public bool EsAdmin()
     {
         ClaimsPrincipal? usuario = _httpContextAccessor.HttpContext?.User;
