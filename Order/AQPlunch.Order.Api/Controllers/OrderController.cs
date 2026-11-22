@@ -1,3 +1,4 @@
+using AQPlunch.OrderService.Application.UseCases.Orders.Commands;
 using AQPlunch.OrderService.Application.UseCases.Orders.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -21,5 +22,12 @@ public class OrderController : ControllerBase
     public async Task<IActionResult> GetByTableToken(Guid qrToken)
     {
         return Ok(await _mediator.Send(new GetOrdersByTableTokenQuery { QrToken = qrToken }));
+    }
+
+    [AllowAnonymous]
+    [HttpPost]
+    public async Task<IActionResult> Add([FromBody] AddOrderCommand command)
+    {
+        return Ok(await _mediator.Send(command));
     }
 }
