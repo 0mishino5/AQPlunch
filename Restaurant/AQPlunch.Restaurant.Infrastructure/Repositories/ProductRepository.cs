@@ -36,6 +36,33 @@ public class ProductRepository : Repository<Product>, IProductRepository
             .ToListAsync();
     }
 
+    public async Task<List<Product>> Buscar(Guid restaurantId, string? texto, Guid? categoryId, bool soloDisponibles)
+    {
+        IQueryable<Product> consulta = Consulta().Where(p => p.Category.RestaurantId == restaurantId);
+
+        if (!string.IsNullOrWhiteSpace(texto))
+        {
+            string buscado = texto.Trim().ToLower();
+
+            consulta = consulta.Where(p => p.Name.ToLower().Contains(buscado) || (p.Description != null && p.Description.ToLower().Contains(buscado)));
+        }
+
+        if (categoryId != null)
+        {
+            consulta = consulta.Where(p => p.CategoryId == categoryId);
+        }
+
+        if (soloDisponibles)
+        {
+            consulta = consulta.Where(p => p.IsAvailable);
+        }
+
+        return await consulta
+            .OrderBy(p => p.Category.Name)
+            .ThenBy(p => p.Name)
+            .ToListAsync();
+    }
+
     public async Task<bool> ExistenEnCategoria(Guid categoryId)
     {
         return await _dbSet.AnyAsync(p => p.CategoryId == categoryId);

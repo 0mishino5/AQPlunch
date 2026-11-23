@@ -43,6 +43,12 @@ public class DiningTableController : ControllerBase
         return Ok(await _mediator.Send(command));
     }
 
+    [HttpPost("lote")]
+    public async Task<IActionResult> AddBatch([FromBody] AddDiningTableBatchCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
+
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDiningTableCommand command)
     {
@@ -50,6 +56,12 @@ public class DiningTableController : ControllerBase
         await _mediator.Send(command);
 
         return Ok(new { message = "Mesa actualizada" });
+    }
+
+    [HttpPut("{id:guid}/regenerar-qr")]
+    public async Task<IActionResult> RegenerateQr(Guid id)
+    {
+        return Ok(await _mediator.Send(new RegenerateTableQrCommand { TableId = id }));
     }
 
     [HttpDelete("{id:guid}")]
