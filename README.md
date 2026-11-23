@@ -50,6 +50,16 @@ Cada servicio tiene 4 proyectos con arquitectura hexagonal y CQRS con MediatR:
 
 Se puede volver a ejecutar cuando se agregue un servicio nuevo. Para empezar una base de cero, bórrala en pgAdmin y ejecuta el script otra vez.
 
+### Usar todo desde el Gateway
+
+El Gateway (`AQPlunch.Gateway`, puerto 5000) es la entrada única del sistema: recibe todas las peticiones y las envía al servicio que corresponde según el prefijo de la ruta. Usa YARP y las rutas están en `Gateway/AQPlunch.Gateway/appsettings.json`.
+
+1. Levanta los 4 servicios y después `AQPlunch.Gateway`.
+2. Llama a todo por `http://localhost:5000`, por ejemplo `POST http://localhost:5000/api/auth/login` o `GET http://localhost:5000/api/productos/menu/{restaurantId}`.
+3. El token se envía igual que en cada servicio, en el encabezado `Authorization: Bearer …`. El Gateway lo pasa tal cual y cada servicio lo valida.
+
+`http://localhost:5000/` muestra qué prefijos van a cada servicio. Swagger sigue en el puerto de cada servicio. Si un servicio está apagado, el Gateway responde 502 solo para sus rutas y los demás siguen funcionando.
+
 ### Usuarios de prueba
 
 | Usuario | Contraseña | Rol |
