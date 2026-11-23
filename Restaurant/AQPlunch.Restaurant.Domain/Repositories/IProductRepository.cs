@@ -7,5 +7,6 @@ public interface IProductRepository : IRepository<Product>
     Task<List<Product>> ObtenerPorIds(List<Guid> ids);
     Task<List<Product>> ObtenerPorRestaurante(Guid restaurantId);
     Task<List<Product>> ObtenerDisponiblesPorRestaurante(Guid restaurantId);
+    Task<List<Product>> Buscar(Guid restaurantId, string? texto, Guid? categoryId, bool soloDisponibles);
     Task<bool> ExistenEnCategoria(Guid categoryId);
 }

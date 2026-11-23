@@ -38,6 +38,14 @@ public class ProductController : ControllerBase
         return Ok(await _mediator.Send(new GetProductsByRestaurantQuery { RestaurantId = restaurantId }));
     }
 
+    [HttpGet("restaurante/{restaurantId:guid}/buscar")]
+    public async Task<IActionResult> Search(Guid restaurantId, [FromQuery] SearchProductsQuery query)
+    {
+        query.RestaurantId = restaurantId;
+
+        return Ok(await _mediator.Send(query));
+    }
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -57,6 +65,15 @@ public class ProductController : ControllerBase
         await _mediator.Send(command);
 
         return Ok(new { message = "Producto actualizado" });
+    }
+
+    [HttpPut("{id:guid}/disponibilidad")]
+    public async Task<IActionResult> ChangeAvailability(Guid id, [FromBody] ChangeProductAvailabilityCommand command)
+    {
+        command.ProductId = id;
+        await _mediator.Send(command);
+
+        return Ok(new { message = "Disponibilidad actualizada" });
     }
 
     [HttpDelete("{id:guid}")]
