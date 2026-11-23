@@ -1,5 +1,7 @@
+using AQPlunch.Identity.Application.Clients;
 using AQPlunch.Identity.Application.Security;
 using AQPlunch.Identity.Domain.Repositories;
+using AQPlunch.Identity.Infrastructure.Clients;
 using AQPlunch.Identity.Infrastructure.Database;
 using AQPlunch.Identity.Infrastructure.Repositories;
 using AQPlunch.Identity.Infrastructure.Security;
@@ -24,6 +26,14 @@ public static class InfrastructureServicesExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IAuthService, AuthService>();
+
+        services.AddHttpContextAccessor();
+
+        services.AddHttpClient<IRestaurantClient, RestaurantClient>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["Servicios:Restaurant"]!);
+            client.Timeout = TimeSpan.FromSeconds(10);
+        });
 
         return services;
     }

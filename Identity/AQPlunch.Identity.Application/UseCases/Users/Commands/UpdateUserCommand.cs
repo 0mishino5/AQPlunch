@@ -1,3 +1,4 @@
+using AQPlunch.Identity.Application.Clients;
 using AQPlunch.Identity.Domain.Catalogs;
 using AQPlunch.Identity.Domain.Entities;
 using AQPlunch.Identity.Domain.Exceptions;
@@ -15,7 +16,7 @@ public class UpdateUserCommand : IRequest<Unit>
     public bool IsActive { get; set; }
 }
 
-internal sealed class UpdateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateUserCommand, Unit>
+internal sealed class UpdateUserCommandHandler(IUnitOfWork unitOfWork, IRestaurantClient restaurantClient) : IRequestHandler<UpdateUserCommand, Unit>
 {
     public async Task<Unit> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
@@ -37,6 +38,21 @@ internal sealed class UpdateUserCommandHandler(IUnitOfWork unitOfWork) : IReques
         if (esRestaurante && request.RestaurantId == null)
         {
             throw new ReglaNegocioException("El personal de un restaurante necesita el RestaurantId");
+        }
+
+        if (esAdmin && request.RestaurantId != null)
+        {
+            throw new ReglaNegocioException("Un Admin no pertenece a un restaurante");
+        }
+
+        if (request.RestaurantId != null && request.RestaurantId != usuario.RestaurantId)
+        {
+            RestaurantInfo restaurante = await restaurantClient.ObtenerRestaurante(request.RestaurantId.Value);
+
+            if (!restaurante.IsActive)
+            {
+                throw new ReglaNegocioException($"El restaurante {restaurante.Name} esta inactivo");
+            }
         }
 
         if (esAdmin && usuario.IsActive && !request.IsActive && await unitOfWork.Users.ContarActivosConRol(NombreRol.Admin) <= 1)
