@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using AQPlunch.Identity.Application.Security;
+using AQPlunch.Identity.Application.UseCases.Auth.Commands;
 using AQPlunch.Identity.Application.UseCases.Auth.Queries;
 using AQPlunch.Identity.Application.UseCases.Users.Queries;
 using MediatR;
@@ -31,5 +32,15 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> GetPerfil()
     {
         return Ok(await _mediator.Send(new GetUserByIdQuery { UserId = Guid.Parse(User.FindFirstValue(NombreClaim.UserId)!) }));
+    }
+
+    [Authorize]
+    [HttpPut("password")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordCommand command)
+    {
+        command.UserId = Guid.Parse(User.FindFirstValue(NombreClaim.UserId)!);
+        await _mediator.Send(command);
+
+        return Ok(new { message = "Contrasena actualizada" });
     }
 }

@@ -45,6 +45,15 @@ public class UserController : ControllerBase
         return Ok(new { message = "Usuario actualizado" });
     }
 
+    [HttpPut("{id:guid}/password")]
+    public async Task<IActionResult> ResetPassword(Guid id, [FromBody] ResetUserPasswordCommand command)
+    {
+        command.UserId = id;
+        await _mediator.Send(command);
+
+        return Ok(new { message = "Contrasena restablecida" });
+    }
+
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
