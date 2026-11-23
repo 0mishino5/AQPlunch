@@ -95,6 +95,7 @@ Lo emite IdentityService y los demás servicios lo validan con los mismos valore
 | Order | Restaurant | `GET api/mesas/token/{token}` (pública) | Mesa, número y restaurante |
 | Order | Restaurant | `GET api/productos/por-ids?ids=…` | Id, nombre, precio, disponible y restaurante de cada producto |
 | Sales | Order | `GET api/pedidos/{id}` | Pedido con su detalle, estado y total |
+| Identity | Restaurant | `GET api/restaurantes/{id}` (con el token del Admin) | Nombre del restaurante y si está activo. Se usa al crear o editar un usuario con restaurante |
 
 ### Prefijos de rutas por servicio
 

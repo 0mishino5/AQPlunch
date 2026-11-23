@@ -24,6 +24,14 @@ public class UserRepository : Repository<User>, IUserRepository
             .FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
     }
 
+    public async Task<List<User>> ObtenerPorRestaurante(Guid restaurantId)
+    {
+        return await Consulta()
+            .Where(u => u.RestaurantId == restaurantId)
+            .OrderBy(u => u.Username)
+            .ToListAsync();
+    }
+
     public async Task<bool> ExisteUsername(string username)
     {
         return await _dbSet.AnyAsync(u => u.Username.ToLower() == username.ToLower());

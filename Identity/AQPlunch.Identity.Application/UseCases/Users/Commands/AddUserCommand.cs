@@ -1,3 +1,4 @@
+using AQPlunch.Identity.Application.Clients;
 using AQPlunch.Identity.Application.Security;
 using AQPlunch.Identity.Domain.Catalogs;
 using AQPlunch.Identity.Domain.Entities;
@@ -17,7 +18,7 @@ public class AddUserCommand : IRequest<Guid>
     public string RoleName { get; set; } = null!;
 }
 
-internal sealed class AddUserCommandHandler(IAuthService authService, IUnitOfWork unitOfWork) : IRequestHandler<AddUserCommand, Guid>
+internal sealed class AddUserCommandHandler(IAuthService authService, IUnitOfWork unitOfWork, IRestaurantClient restaurantClient) : IRequestHandler<AddUserCommand, Guid>
 {
     public async Task<Guid> Handle(AddUserCommand request, CancellationToken cancellationToken)
     {
@@ -51,6 +52,16 @@ internal sealed class AddUserCommandHandler(IAuthService authService, IUnitOfWor
         if (rol.RoleName == NombreRol.Admin && request.RestaurantId != null)
         {
             throw new ReglaNegocioException("Un Admin no pertenece a un restaurante");
+        }
+
+        if (request.RestaurantId != null)
+        {
+            RestaurantInfo restaurante = await restaurantClient.ObtenerRestaurante(request.RestaurantId.Value);
+
+            if (!restaurante.IsActive)
+            {
+                throw new ReglaNegocioException($"El restaurante {restaurante.Name} esta inactivo");
+            }
         }
 
         User usuario = new User

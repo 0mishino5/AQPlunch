@@ -24,6 +24,12 @@ public class UserController : ControllerBase
         return Ok(await _mediator.Send(new GetUsersQuery()));
     }
 
+    [HttpGet("restaurante/{restaurantId:guid}")]
+    public async Task<IActionResult> GetByRestaurant(Guid restaurantId)
+    {
+        return Ok(await _mediator.Send(new GetUsersByRestaurantQuery { RestaurantId = restaurantId }));
+    }
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -43,6 +49,15 @@ public class UserController : ControllerBase
         await _mediator.Send(command);
 
         return Ok(new { message = "Usuario actualizado" });
+    }
+
+    [HttpPut("{id:guid}/password")]
+    public async Task<IActionResult> ResetPassword(Guid id, [FromBody] ResetUserPasswordCommand command)
+    {
+        command.UserId = id;
+        await _mediator.Send(command);
+
+        return Ok(new { message = "Contrasena restablecida" });
     }
 
     [HttpDelete("{id:guid}")]

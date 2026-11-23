@@ -13,6 +13,7 @@ public class ManejadorDeExcepciones : IExceptionFilter
             RecursoNoEncontradoException => new NotFoundObjectResult(new { message = context.Exception.Message }),
             ReglaNegocioException => new BadRequestObjectResult(new { message = context.Exception.Message }),
             CredencialesInvalidasException => new UnauthorizedObjectResult(new { message = context.Exception.Message }),
+            ServicioNoDisponibleException => new ObjectResult(new { message = context.Exception.Message }) { StatusCode = StatusCodes.Status503ServiceUnavailable },
             _ => null
         };
 
