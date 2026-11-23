@@ -1,13 +1,14 @@
 using System.Text;
 using System.Text.Json.Serialization;
-using AQPlunch.Order.Api.ExceptionHandling;
-using AQPlunch.Order.Application.DependencyInjection;
-using AQPlunch.Order.Infrastructure.DependencyInjection;
+using AQPlunch.OrderService.Api.ExceptionHandling;
+using AQPlunch.OrderService.Application.DependencyInjection;
+using AQPlunch.OrderService.Domain.Catalogs;
+using AQPlunch.OrderService.Infrastructure.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 
-namespace AQPlunch.Order.Api.DependencyInjection;
+namespace AQPlunch.OrderService.Api.DependencyInjection;
 
 public static class ServiceRegistrationExtensions
 {
@@ -31,7 +32,11 @@ public static class ServiceRegistrationExtensions
                 };
             });
 
-        services.AddAuthorization();
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Administrador", policy => policy.RequireRole(NombreRol.Admin));
+            options.AddPolicy("Restaurante", policy => policy.RequireRole(NombreRol.Admin, NombreRol.Restaurante));
+        });
 
         services.AddControllers(options =>
         {

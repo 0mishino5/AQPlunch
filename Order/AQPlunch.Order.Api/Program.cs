@@ -1,4 +1,4 @@
-using AQPlunch.Order.Api.DependencyInjection;
+using AQPlunch.OrderService.Api.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

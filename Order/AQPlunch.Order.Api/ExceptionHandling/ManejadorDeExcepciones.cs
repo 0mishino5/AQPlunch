@@ -1,8 +1,8 @@
-using AQPlunch.Order.Domain.Exceptions;
+using AQPlunch.OrderService.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace AQPlunch.Order.Api.ExceptionHandling;
+namespace AQPlunch.OrderService.Api.ExceptionHandling;
 
 public class ManejadorDeExcepciones : IExceptionFilter
 {
@@ -12,6 +12,8 @@ public class ManejadorDeExcepciones : IExceptionFilter
         {
             RecursoNoEncontradoException => new NotFoundObjectResult(new { message = context.Exception.Message }),
             ReglaNegocioException => new BadRequestObjectResult(new { message = context.Exception.Message }),
+            AccesoDenegadoException => new ObjectResult(new { message = context.Exception.Message }) { StatusCode = StatusCodes.Status403Forbidden },
+            ServicioNoDisponibleException => new ObjectResult(new { message = context.Exception.Message }) { StatusCode = StatusCodes.Status503ServiceUnavailable },
             _ => null
         };
 
