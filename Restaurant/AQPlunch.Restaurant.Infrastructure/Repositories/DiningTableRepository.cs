@@ -30,6 +30,13 @@ public class DiningTableRepository : Repository<DiningTable>, IDiningTableReposi
         return await _dbSet.AnyAsync(t => t.RestaurantId == restaurantId && t.TableNumber == tableNumber);
     }
 
+    public async Task<int> ObtenerUltimoNumero(Guid restaurantId)
+    {
+        return await _dbSet
+            .Where(t => t.RestaurantId == restaurantId)
+            .MaxAsync(t => (int?)t.TableNumber) ?? 0;
+    }
+
     protected override IQueryable<DiningTable> Consulta()
     {
         return _dbSet.Include(t => t.Restaurant);

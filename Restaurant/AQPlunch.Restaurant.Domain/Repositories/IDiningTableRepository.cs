@@ -7,4 +7,5 @@ public interface IDiningTableRepository : IRepository<DiningTable>
     Task<DiningTable?> ObtenerPorToken(Guid qrToken);
     Task<List<DiningTable>> ObtenerPorRestaurante(Guid restaurantId);
     Task<bool> ExisteNumero(Guid restaurantId, int tableNumber);
+    Task<int> ObtenerUltimoNumero(Guid restaurantId);
 }
